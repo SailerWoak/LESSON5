@@ -15,7 +15,7 @@ public class AutomationPractice {
     private final String HOME_PAGE = "http://automationpractice.com/index.php";
     private final By ARTICLES = By.xpath(".//ul[contains(@class, 'menu-content')]/li/a");
     private final By DRESSES = By.xpath(".//ul[@class = 'clearfix']/li/h5/a");
-    private final By COLORS = By.xpath(".//ul[contains(@class, 'color-group')]/li/label/a");
+    private final By COLORS = By.xpath(".//label[contains(@class, 'layered_color')]/a");
     private static final Logger LOGGER = LogManager.getLogger(AutomationPractice.class);
     WebDriver browser;
 
@@ -36,9 +36,12 @@ public class AutomationPractice {
 
 
         LOGGER.info("Choosing color 'Orange and clicking'");
-        WebDriverWait wait = new WebDriverWait(browser, 30);
+        WebDriverWait wait = new WebDriverWait(browser, 10);
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(COLORS));
-        borderOfColoursByName("Orange").click();
+
+       List <WebElement> orange = browser.findElements(COLORS);
+        orange.get(3).click();
+   //     borderOfColoursByName("Orange").click();
 
     }
 
@@ -53,9 +56,9 @@ public class AutomationPractice {
         return null;
     }
 
-    private WebElement subCategoryByName (String name){
+    private WebElement subCategoryByName(String name) {
         List<WebElement> subCategoryDresses = browser.findElements(DRESSES);
-        for(int i = 0; i < subCategoryDresses.size(); i++){
+        for (int i = 0; i < subCategoryDresses.size(); i++) {
             WebElement dresses = subCategoryDresses.get(i);
             if (dresses.getText().equals(name)) {
                 return dresses;
@@ -64,19 +67,19 @@ public class AutomationPractice {
         return null;
     }
 
-    private WebElement borderOfColoursByName (String name) {
-        List<WebElement> borderOfColours = browser.findElements(COLORS);
-        for(int i = 0; i < borderOfColours.size(); i++){
-            WebElement colours = borderOfColours.get(i);
-            if (colours.getText().equals(name)){
-                return colours;
+//    private WebElement borderOfColoursByName(String name) {
+//        List<WebElement> borderOfColours = browser.findElements(COLORS);
+//        for (int i = 0; i < borderOfColours.size(); i++) {
+//            WebElement color = borderOfColours.get(i);
+//            if (color.getText().equals(name)) {
+//                return color;
             }
-        }
-        return null;
-    }
+     //   }
+      //  return null;
+  //  }
 
 //    @AfterEach
 //    public void browserClose() {
 //        browser.close();
 //    }
-}
+//}
